@@ -12,9 +12,9 @@ class Msg(commands.Cog):
         prm=ctx.author.id in [1423889759847059547, ]
         if cmd=='m' and prm:
             await ctx.send(f'{msg}')
-        if cmd=='mul' and prm:
+        elif cmd=='mul' and prm:
             await ctx.send('\n'.join(msg for _ in range(int(kw[0]) if kw else 10)))
-        if cmd=='showid':
+        elif cmd=='showid':
             await ctx.send(f'{ctx.author.id}')
 
 async def setup(bot):
