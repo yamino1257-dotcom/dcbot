@@ -2,7 +2,9 @@ import discord
 import asyncio
 import os
 from discord.ext import commands
-from dotenv import load_dotenv
+#放開頭
+from flask import Flask
+from threading import Thread
 
 tk0='MTQ0ODYxMDUzNz'
 tk1='c3MTQ5OTU4M'
@@ -10,7 +12,7 @@ tk2='g.GJJQkm.'
 tk3='67dKZVO9dPoXjX'
 tk4='MTlC8K5CMYGDIePuCuJgSK0E'
 
-load_dotenv()
+
 token = tk0+tk1+tk2+tk3+tk4
 
 intents = discord.Intents.default()
@@ -28,5 +30,29 @@ async def on_ready():
     print('cog loaded')
 
 
+# 放結尾
+app = Flask('')
 
-bot.run(token)
+@app.route('/')
+def home():
+    return "上線了"
+
+def run_flask():
+  
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host='0.0.0.0', port=port, debug=False)
+
+async def main():
+   
+    t = Thread(target=run_flask)
+    t.daemon = True
+    t.start()
+    
+ 
+    async with bot:
+        await load_extensions()
+        await bot.start(token)
+
+if __name__ == '__main__':
+  	asyncio.run(main())
+    
